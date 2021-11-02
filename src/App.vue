@@ -1,28 +1,53 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <fast-table :fastData="fastData" :columns="columns"></fast-table>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import FastTable from "./components/FastTable.vue"
 export default {
   name: 'App',
+  data() {
+    return {
+      fastData: {
+        data: [{
+          name: '王小虎',
+          date: '2020.11.6',
+          hobbit: 'coding pro'
+        },
+        {
+          name: '王小虎',
+          date: '2020.11.6',
+          hobbit: 'coding pro'
+        },
+        {
+          name: '王小虎',
+          date: '2020.11.6',
+          hobbit: 'coding pro'
+        }]
+      },
+      columns: [
+        {
+          label: '姓名',
+          prop: 'name'
+        },
+        {
+          label: '时间',
+          prop: 'date'
+        },
+        {
+          label: '爱好',
+          prop: 'hobbit'
+        }
+      ]
+    }
+  },
   components: {
-    HelloWorld
+    FastTable
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
