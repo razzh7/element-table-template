@@ -44,7 +44,11 @@ export default {
           type: "selection"  // 是否开启多选
         },
         {
-          type: "index" // 是否开启序号
+          isIndex: {
+            type: "index",
+            width: 80,
+            label: "序号"
+          }
         },
         {
           attrs: { label: "姓名", prop: "name" },
@@ -55,32 +59,32 @@ export default {
         {
           attrs: { label: "爱好", prop: "habbit" },
         },
-        {
-          operation: {
-            label: "操作",
-            width: 260,
-            btnList: [
-            {
-              name: "查看", // 操作节点名称
-              type: "primary", // 按钮类型
-              // icon: "el-icon-check",
-              handleCb: this.handleCb
-            },
-            {
-              name: "编辑", // 操作节点名称
-              type: "danger", // 按钮类型
-              icon: "el-icon-edit",
-              handleCb: this.handleCb
-            },
-            {
-              name: "导出", // 操作节点名称
-              type: "danger", // 按钮类型
-              icon: "el-icon-upload",
-              handleCb: this.handleCb
-            }
-          ],
-          }
-        }
+        // {
+        //   operation: {
+        //     label: "操作",
+        //     width: 260,
+        //     btnList: [
+        //     {
+        //       name: "查看", // 操作节点名称
+        //       type: "primary", // 按钮类型
+        //       // icon: "el-icon-check",
+        //       handleCb: this.handleCb
+        //     },
+        //     {
+        //       name: "编辑", // 操作节点名称
+        //       type: "danger", // 按钮类型
+        //       icon: "el-icon-edit",
+        //       handleCb: this.handleCb
+        //     },
+        //     {
+        //       name: "导出", // 操作节点名称
+        //       type: "danger", // 按钮类型
+        //       icon: "el-icon-upload",
+        //       handleCb: this.handleCb
+        //     }
+        //   ],
+        //   }
+        // }
       ],
     };
   },

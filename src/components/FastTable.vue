@@ -2,7 +2,8 @@
   <div class="fast-table">
     <el-table
       v-bind="$attrs"
-      style="width: 100%">
+      style="width: 100%"
+      >
       <template
        v-for="column in $attrs.columns">
        <!-- 是否可选 -->
@@ -14,9 +15,9 @@
        </el-table-column>
        <!-- 是否开启序号 -->
        <el-table-column
-          v-else-if="column.type === 'index'"
-          :key="column.type"
-          label="序号"
+          v-else-if="column.isIndex"
+          :key="column.isIndex['type']"
+          v-bind="column.isIndex || {}"
           type="index"
           align="center">
        </el-table-column>
