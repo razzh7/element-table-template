@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <fast-table :fastData="fastData"></fast-table>
+    <fast-table :data="fastData" :columns="columns" border stripe></fast-table>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -9,9 +9,7 @@
       <span>这是一段信息</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -24,11 +22,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      fastData: {
-        border: true, // 是否开启border
-        isIndex: true,
-        isSelection: 'selection', // 是否开启selection
-        data: [
+      fastData: [
           {
             name: "razzh-",
             date: "2021",
@@ -45,11 +39,27 @@ export default {
             habbit: "al",
           },
         ],
-        operation: {
-          title: "操作",
-          // fixed: 'right',
-          width: "260", // 操作栏的宽度
-          btnList: [
+      columns: [
+        {
+          type: "selection"  // 是否开启多选
+        },
+        {
+          type: "index" // 是否开启序号
+        },
+        {
+          attrs: { label: "姓名", prop: "name" },
+        },
+        {
+          attrs: { label: "时间", prop: "date" },
+        },
+        {
+          attrs: { label: "爱好", prop: "habbit" },
+        },
+        {
+          operation: {
+            label: "操作",
+            width: 260,
+            btnList: [
             {
               name: "查看", // 操作节点名称
               type: "primary", // 按钮类型
@@ -59,40 +69,24 @@ export default {
             {
               name: "编辑", // 操作节点名称
               type: "danger", // 按钮类型
-              icon: "el-icon-edit"
+              icon: "el-icon-edit",
+              handleCb: this.handleCb
             },
             {
               name: "导出", // 操作节点名称
               type: "danger", // 按钮类型
-              icon: "el-icon-upload"
+              icon: "el-icon-upload",
+              handleCb: this.handleCb
             }
           ],
-        },
-        columns: [
-          {
-            title: "姓名",
-            prop: "name",
-          },
-          {
-            title: "时间",
-            prop: "date",
-          },
-          {
-            title: "爱好",
-            prop: "habbit",
-          },
-        ],
-      },
+          }
+        }
+      ],
     };
   },
   methods: {
-    handleCb(index, row, name,c) {
-      console.log(index);
-      console.log(row);
-      console.log(name);
-      console.log(c);
-      console.log(this);
-      this.dialogVisible = true;
+    handleCb(index, row, name) {
+      this.dialogVisible = true; // 开启dialog
     }
   },
   components: {
