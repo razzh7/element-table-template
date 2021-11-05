@@ -20,6 +20,15 @@
           v-bind="column.isIndex || {}"
           type="index"
           align="center">
+          <!-- 自定义插槽 用于分页自增加页数 -->
+          <template slot-scope="scope">
+            <!-- (当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1 -->
+            <!-- column.isPagination:是否存在分页 -->
+            <span v-if="column.isIndex['isPagination']">
+              {{ ($attrs.curPage - 1) * $attrs.pageSize + scope.$index + 1 }}
+            </span>
+            <span v-else>{{ scope.$index + 1 }}</span>
+          </template>
        </el-table-column>
        <!-- 具体内容 -->
         <el-table-column
@@ -48,7 +57,7 @@
                     </el-button>
                     <el-button v-else 
                         :type="item.type" 
-                        @click.native="item.handleCb(scope.$index, scope.row, item.name,scope)" 
+                        @click.native="item.handleCb(scope.$index, scope.row, item.name)" 
                         size="mini" v-bind="item">
                         {{ item.name }}
                     </el-button>
