@@ -27,7 +27,8 @@ columns: [
     type: "selection" // 是否开启多选
   },
   {
-    type: "index" // 是否开启序号
+    // isPagination（可选）是否开启序号随分页改变而自增
+    isIndex: { type: "index", width: 80, label: "序号", isPagination: false }
   },
   {
     // prop:具体内容,对应fastData中的key
@@ -46,7 +47,7 @@ columns: [
           icon: "el-icon-check" // (选填)是否添加icon图标
           handleCb: function(){} // 事件回调函数 点击后触发
         }
-  			...
+  				...
       ]
       
     }
@@ -113,7 +114,7 @@ export default {
           type: "selection"  // 是否开启多选
         },
         {
-          type: "index" // 是否开启序号
+          isIndex: { type: "index", width: 80, label: "序号", isPagination: false } // isPagination是否开启分页随页数自增
         },
         {
           attrs: { label: "姓名", prop: "name" },
@@ -175,7 +176,8 @@ fast-table.vue
   <div class="fast-table">
     <el-table
       v-bind="$attrs"
-      style="width: 100%">
+      style="width: 100%"
+      >
       <template
        v-for="column in $attrs.columns">
        <!-- 是否可选 -->
@@ -187,11 +189,20 @@ fast-table.vue
        </el-table-column>
        <!-- 是否开启序号 -->
        <el-table-column
-          v-else-if="column.type === 'index'"
-          :key="column.type"
-          label="序号"
+          v-else-if="column.isIndex"
+          :key="column.isIndex['type']"
+          v-bind="column.isIndex || {}"
           type="index"
           align="center">
+          <!-- 自定义插槽 用于分页自增加页数 -->
+          <template slot-scope="scope">
+            <!-- (当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1 -->
+            <!-- column.isPagination:是否存在分页 -->
+            <span v-if="column.isIndex['isPagination']">
+              {{ ($attrs.curPage - 1) * $attrs.pageSize + scope.$index + 1 }}
+            </span>
+            <span v-else>{{ scope.$index + 1 }}</span>
+          </template>
        </el-table-column>
        <!-- 具体内容 -->
         <el-table-column
@@ -220,7 +231,7 @@ fast-table.vue
                     </el-button>
                     <el-button v-else 
                         :type="item.type" 
-                        @click.native="item.handleCb(scope.$index, scope.row, item.name,scope)" 
+                        @click.native="item.handleCb(scope.$index, scope.row, item.name)" 
                         size="mini" v-bind="item">
                         {{ item.name }}
                     </el-button>
