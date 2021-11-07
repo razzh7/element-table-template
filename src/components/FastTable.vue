@@ -2,10 +2,11 @@
   <div class="fast-table">
     <el-table
       v-bind="$attrs"
+      v-on="$listeners"
       style="width: 100%"
       >
       <template
-       v-for="column in $attrs.columns">
+       v-for="(column,index) in $attrs.columns">
        <!-- 是否可选 -->
        <el-table-column
           v-if="column.type === 'selection'"
@@ -32,9 +33,9 @@
        </el-table-column>
        <!-- 具体内容 -->
         <el-table-column
-          v-else-if="column.attrs"
-          :key="column.attrs.prop"
-          v-bind="column.attrs || {}"
+          v-else-if="column.attrs || column.filter"
+          :key="index"
+          v-bind="column.attrs || column.filter"
           align="center">
         </el-table-column>
         <!-- 操作栏 -->

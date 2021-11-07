@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <fast-table :data="fastData" :columns="columns" border stripe></fast-table>
+    <fast-table :data="fastData" :columns="columns" border stripe @filter-change="filterChange"></fast-table>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -27,16 +27,25 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
+            salers: "源九网络"
+          },
+          {
+            name: 'razzg',
+            date: "2021-",
+            habbit: "game",
+            salers: "正元智慧"
           },
           {
             name: "razzh",
             date: "2022",
             habbit: "coding",
+            salers: "贝贝"
           },
           {
             name: "razzh+",
             date: "2023",
             habbit: "al",
+            salers: "阿里巴巴"
           },
         ],
       columns: [
@@ -48,6 +57,17 @@ export default {
         },
         {
           attrs: { label: "姓名", prop: "name" },
+        },
+        {
+          filter: { label: "过滤列", 
+                    prop:"salers", 
+                    filters:[
+                              {text: '源九网络', value: '源九网络'},
+                              {text: '正元智慧', value: '正元智慧'}, 
+                              {text: '贝贝', value: '贝贝'},
+                              {text: '阿里巴巴', value: '阿里巴巴'}],
+                    filterMethod: this.filterTags
+                  }
         },
         {
           attrs: { label: "时间", prop: "date" },
@@ -87,6 +107,12 @@ export default {
   methods: {
     handleCb(index, row, name) {
       this.dialogVisible = true; // 开启dialog
+    },
+    filterTags(value,row){
+      return value === row.salers;
+    },
+    filterChange() {
+      console.log('触发表单过滤事件')
     }
   },
   components: {
