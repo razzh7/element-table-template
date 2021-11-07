@@ -1,12 +1,14 @@
 # Element-fast-table
 
-Element-fast-table采用Vue Api —— `$attrs`可用在<fast-table />上使用el-table的全部属性，例如：
+Element-fast-table采用`$attrs`和`$listeners`可用在<fast-table />上使用el-table的全部属性和事件，例如：
 
 ```js
-<fast-table border stripe></fast-table>
+<fast-table border stripe @filter-change="filterChange"></fast-table>
 ```
 
 设置border和stripe两个属性后表格将开启纵边框和条纹
+
+@filter-change将在表格筛选条件发生变化的时候调用
 
 ## 配置概览
 
@@ -35,6 +37,13 @@ columns: [
     attrs: { label: "姓名", prop: "name" } 
     ...
   },
+  {
+    // 筛选列
+    // filters: 筛选列数组
+    // fiterMethod: 筛选方法
+    filter: { label: "筛选列", prop: "salers", filters: [text: "",value: ""],
+            filterMethod: function(){} }
+  }
   {
     operation: { // 操作栏配置项
       label: "操作", // 表头名字
@@ -69,7 +78,7 @@ App.vue
 ```js
 <template>
   <div id="app">
-    <fast-table :data="fastData" :columns="columns" border stripe></fast-table>
+    <fast-table :data="fastData" :columns="columns" border stripe @filter-change="filterChange"></fast-table>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -96,16 +105,25 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
+            salers: "源九网络"
+          },
+          {
+            name: 'razzg',
+            date: "2021-",
+            habbit: "game",
+            salers: "正元智慧"
           },
           {
             name: "razzh",
             date: "2022",
             habbit: "coding",
+            salers: "贝贝"
           },
           {
             name: "razzh+",
             date: "2023",
             habbit: "al",
+            salers: "阿里巴巴"
           },
         ],
       columns: [
@@ -113,10 +131,21 @@ export default {
           type: "selection"  // 是否开启多选
         },
         {
-          type: "index" // 是否开启序号
+          isIndex: { type: "index", width: 80, label: "序号", isPagination: false } // isPagination是否开启分页随页数自增
         },
         {
           attrs: { label: "姓名", prop: "name" },
+        },
+        {
+          filter: { label: "过滤列", 
+                    prop:"salers", 
+                    filters:[
+                              {text: '源九网络', value: '源九网络'},
+                              {text: '正元智慧', value: '正元智慧'}, 
+                              {text: '贝贝', value: '贝贝'},
+                              {text: '阿里巴巴', value: '阿里巴巴'}],
+                    filterMethod: this.filterTags
+                  }
         },
         {
           attrs: { label: "时间", prop: "date" },
@@ -156,6 +185,12 @@ export default {
   methods: {
     handleCb(index, row, name) {
       this.dialogVisible = true; // 开启dialog
+    },
+    filterTags(value,row){
+      return value === row.salers;
+    },
+    filterChange() {
+      console.log('触发表单过滤事件')
     }
   },
   components: {
@@ -175,9 +210,11 @@ fast-table.vue
   <div class="fast-table">
     <el-table
       v-bind="$attrs"
-      style="width: 100%">
+      v-on="$listeners"
+      style="width: 100%"
+      >
       <template
-       v-for="column in $attrs.columns">
+       v-for="(column,index) in $attrs.columns">
        <!-- 是否可选 -->
        <el-table-column
           v-if="column.type === 'selection'"
@@ -187,17 +224,26 @@ fast-table.vue
        </el-table-column>
        <!-- 是否开启序号 -->
        <el-table-column
-          v-else-if="column.type === 'index'"
-          :key="column.type"
-          label="序号"
+          v-else-if="column.isIndex"
+          :key="column.isIndex['type']"
+          v-bind="column.isIndex || {}"
           type="index"
           align="center">
+          <!-- 自定义插槽 用于分页自增加页数 -->
+          <template slot-scope="scope">
+            <!-- (当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1 -->
+            <!-- column.isPagination:是否存在分页 -->
+            <span v-if="column.isIndex['isPagination']">
+              {{ ($attrs.curPage - 1) * $attrs.pageSize + scope.$index + 1 }}
+            </span>
+            <span v-else>{{ scope.$index + 1 }}</span>
+          </template>
        </el-table-column>
        <!-- 具体内容 -->
         <el-table-column
-          v-else-if="column.attrs"
-          :key="column.attrs.prop"
-          v-bind="column.attrs || {}"
+          v-else-if="column.attrs || column.filter"
+          :key="index"
+          v-bind="column.attrs || column.filter"
           align="center">
         </el-table-column>
         <!-- 操作栏 -->
@@ -220,7 +266,7 @@ fast-table.vue
                     </el-button>
                     <el-button v-else 
                         :type="item.type" 
-                        @click.native="item.handleCb(scope.$index, scope.row, item.name,scope)" 
+                        @click.native="item.handleCb(scope.$index, scope.row, item.name)" 
                         size="mini" v-bind="item">
                         {{ item.name }}
                     </el-button>
