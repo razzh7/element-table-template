@@ -1,5 +1,7 @@
 # Element-fast-table
 
+下一个目标：实现el-table-column中的自定义内容
+
 Element-fast-table采用`$attrs`和`$listeners`可用在<fast-table />上使用el-table的全部属性和事件，例如：
 
 ```js
@@ -29,14 +31,20 @@ columns: [
     type: "selection" // 是否开启多选
   },
   {
+<<<<<<< HEAD
     // isPagination（可选）是否开启序号随分页改变而自增
     isIndex: { type: "index", width: 80, label: "序号", isPagination: false }
+=======
+    // 是否开启序号
+    //isPagination是否开启分页变化，序号自增
+    // 需在fast-table tag中传入：curPage和pageSize（当前页数，当前页显示数据条数）
+    isIndex: { type: "index", width: 80, label: "序号", isPagination: false} 
+>>>>>>> dev
   },
   {
     // prop:具体内容,对应fastData中的key
     // label：表头名字
     attrs: { label: "姓名", prop: "name" } 
-    ...
   },
   {
     // 筛选列
@@ -56,7 +64,10 @@ columns: [
           icon: "el-icon-check" // (选填)是否添加icon图标
           handleCb: function(){} // 事件回调函数 点击后触发
         }
+<<<<<<< HEAD
   				...
+=======
+>>>>>>> dev
       ]
       
     }
@@ -106,7 +117,7 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
-            salers: "源九网络"
+            salers: "士兵突击"
           },
           {
             name: 'razzg',
@@ -141,7 +152,7 @@ export default {
           filter: { label: "过滤列", 
                     prop:"salers", 
                     filters:[
-                              {text: '源九网络', value: '源九网络'},
+                              {text: '士兵突击', value: '士兵突击'},
                               {text: '正元智慧', value: '正元智慧'}, 
                               {text: '贝贝', value: '贝贝'},
                               {text: '阿里巴巴', value: '阿里巴巴'}],
@@ -300,6 +311,4 @@ export default {
 }
 </style>
 ```
-
-后续会在项目复杂后继续加入一些新特性
 
