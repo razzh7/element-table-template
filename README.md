@@ -31,15 +31,12 @@ columns: [
     type: "selection" // 是否开启多选
   },
   {
-<<<<<<< HEAD
     // isPagination（可选）是否开启序号随分页改变而自增
     isIndex: { type: "index", width: 80, label: "序号", isPagination: false }
-=======
     // 是否开启序号
     //isPagination是否开启分页变化，序号自增
     // 需在fast-table tag中传入：curPage和pageSize（当前页数，当前页显示数据条数）
     isIndex: { type: "index", width: 80, label: "序号", isPagination: false} 
->>>>>>> dev
   },
   {
     // prop:具体内容,对应fastData中的key
@@ -64,10 +61,6 @@ columns: [
           icon: "el-icon-check" // (选填)是否添加icon图标
           handleCb: function(){} // 事件回调函数 点击后触发
         }
-<<<<<<< HEAD
-  				...
-=======
->>>>>>> dev
       ]
       
     }
