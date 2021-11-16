@@ -1,6 +1,8 @@
 # Element-fast-table
 
-下一个目标：实现el-table-column中的自定义内容
+已实现：
+
+JSON配置多选列、序号列、具体内容、自定义列（添加图标+内容）、筛选列、操作栏
 
 Element-fast-table采用`$attrs`和`$listeners`可用在<fast-table />上使用el-table的全部属性和事件，例如：
 
@@ -40,6 +42,13 @@ columns: [
     // prop:具体内容,对应fastData中的key
     // label：表头名字
     attrs: { label: "姓名", prop: "name" } 
+  },
+  {
+    params提供row(行内数据)、index、column中的数据
+    customColumn: { label: "自定义列",
+                  	render: (h,params) => {
+                      return(JSX语法自定义渲染column列的内容)
+                    }}
   },
   {
     // 筛选列

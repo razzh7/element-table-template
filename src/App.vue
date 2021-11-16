@@ -63,14 +63,14 @@ export default {
           attrs: { label: "姓名", prop: "name" },
         },
         {
-          customColumn: { label: "自定义列", prop: "custom",
-          render: (h,params) => {
+          customColumn: { label: "自定义列",
+            render: (h,params) => {
             return (
               <div>
                 <el-tag>{ params.row.custom }</el-tag>
               </div>
               )
-          }
+            }
           }
         },
         {
