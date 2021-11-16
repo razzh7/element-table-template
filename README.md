@@ -79,6 +79,8 @@ columns: [
   }
 ]
 ```
+## 界面
+![avatar](https://github.com/rzhAvenir/element-table-template/blob/dev/img/el-table.png)
 
 
 
