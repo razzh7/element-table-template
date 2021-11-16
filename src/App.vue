@@ -27,28 +27,28 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
-            salers: "士兵突击",
+            tv: "士兵突击",
             custom: "已完成"
           },
           {
-            name: 'razzg',
-            date: "2021-",
+            name: 'ff',
+            date: "2021+",
             habbit: "game",
-            salers: "正元智慧",
+            tv: "知否知否应是绿肥红瘦",
             custom: "未完成"
           },
           {
             name: "razzh",
             date: "2022",
             habbit: "coding",
-            salers: "贝贝",
+            tv: "琅琊榜",
             custom: "待付款"
           },
           {
             name: "razzh+",
             date: "2023",
             habbit: "al",
-            salers: "阿里巴巴",
+            tv: "庆余年",
             custom: "已支付"
           },
         ],
@@ -75,12 +75,12 @@ export default {
         },
         {
           filter: { label: "过滤列", 
-                    prop:"salers", 
+                    prop:"tv", 
                     filters:[
                               {text: '士兵突击', value: '士兵突击'},
-                              {text: '正元智慧', value: '正元智慧'}, 
-                              {text: '贝贝', value: '贝贝'},
-                              {text: '阿里巴巴', value: '阿里巴巴'}],
+                              {text: '知否知否应是绿肥红瘦', value: '知否知否应是绿肥红瘦'}, 
+                              {text: '琅琊榜', value: '琅琊榜'},
+                              {text: '庆余年', value: '庆余年'}],
                     filterMethod: this.filterTags
                   }
         },
@@ -127,7 +127,7 @@ export default {
       this.dialogVisible = true; // 开启dialog
     },
     filterTags(value,row){
-      return value === row.salers;
+      return value === row.tv;
     },
     filterChange() {
       console.log('触发表单过滤事件')
