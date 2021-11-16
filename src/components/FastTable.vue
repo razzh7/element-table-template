@@ -38,6 +38,7 @@
           v-bind="column.attrs || column.filter"
           align="center">
         </el-table-column>
+        <!-- 自定义列 -->
         <el-table-column
           v-else-if="column.customColumn"
           :key="index"
