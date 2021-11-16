@@ -82,4 +82,4 @@ columns: [
 ]
 ```
 ## 界面
-![avatar](https://github.com/rzhAvenir/element-table-template/blob/dev/img/el-table.png)
+![avatar](https://github.com/rzhAvenir/element-table-template/blob/master/img/el-table.png)
