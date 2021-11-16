@@ -38,6 +38,21 @@
           v-bind="column.attrs || column.filter"
           align="center">
         </el-table-column>
+        <el-table-column
+          v-else-if="column.customColumn"
+          :key="index"
+          :label="column.customColumn.label"
+          align="center">
+          <template slot-scope="scope">
+            <custom
+            v-if="column.customColumn.render"
+            :row="scope.row"
+            :index="index"
+            :render="column.customColumn.render"
+            :column="column">
+            </custom>
+          </template>
+        </el-table-column>
         <!-- 操作栏 -->
         <el-table-column
             v-else-if="column.operation"
@@ -73,8 +88,12 @@
 </template>
 
 <script>
+import Custom from "./custom.vue";
 export default {
   name: 'FastTable',
+  components: {
+    Custom
+  }
 }
 </script>
 

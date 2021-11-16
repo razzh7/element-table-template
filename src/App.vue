@@ -27,25 +27,29 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
-            salers: "源九网络"
+            salers: "士兵突击",
+            custom: "已完成"
           },
           {
             name: 'razzg',
             date: "2021-",
             habbit: "game",
-            salers: "正元智慧"
+            salers: "正元智慧",
+            custom: "未完成"
           },
           {
             name: "razzh",
             date: "2022",
             habbit: "coding",
-            salers: "贝贝"
+            salers: "贝贝",
+            custom: "待付款"
           },
           {
             name: "razzh+",
             date: "2023",
             habbit: "al",
-            salers: "阿里巴巴"
+            salers: "阿里巴巴",
+            custom: "已支付"
           },
         ],
       columns: [
@@ -59,10 +63,21 @@ export default {
           attrs: { label: "姓名", prop: "name" },
         },
         {
+          customColumn: { label: "自定义列", prop: "custom",
+          render: (h,params) => {
+            return (
+              <div>
+                <el-tag>{ params.row.custom }</el-tag>
+              </div>
+              )
+          }
+          }
+        },
+        {
           filter: { label: "过滤列", 
                     prop:"salers", 
                     filters:[
-                              {text: '源九网络', value: '源九网络'},
+                              {text: '士兵突击', value: '士兵突击'},
                               {text: '正元智慧', value: '正元智慧'}, 
                               {text: '贝贝', value: '贝贝'},
                               {text: '阿里巴巴', value: '阿里巴巴'}],
@@ -106,6 +121,9 @@ export default {
   },
   methods: {
     handleCb(index, row, name) {
+      console.log('index',index);
+      console.log('row',row);
+      console.log('name',name);
       this.dialogVisible = true; // 开启dialog
     },
     filterTags(value,row){
