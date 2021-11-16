@@ -27,25 +27,29 @@ export default {
             name: "razzh-",
             date: "2021",
             habbit: "hard",
-            salers: "源九网络"
+            tv: "知否知否应是绿肥红瘦",
+            custom: "已完成"
           },
           {
-            name: 'razzg',
-            date: "2021-",
+            name: 'ff',
+            date: "2021+",
             habbit: "game",
-            salers: "正元智慧"
+            tv: "士兵突击",
+            custom: "未完成"
           },
           {
-            name: "razzh",
+            name: "bb",
             date: "2022",
             habbit: "coding",
-            salers: "贝贝"
+            tv: "琅琊榜",
+            custom: "待付款"
           },
           {
             name: "razzh+",
             date: "2023",
             habbit: "al",
-            salers: "阿里巴巴"
+            tv: "庆余年",
+            custom: "已支付"
           },
         ],
       columns: [
@@ -59,13 +63,24 @@ export default {
           attrs: { label: "姓名", prop: "name" },
         },
         {
+          customColumn: { label: "自定义列",
+            render: (h,params) => {
+            return (
+              <div>
+                <el-tag>{ params.row.custom }</el-tag>
+              </div>
+              )
+            }
+          }
+        },
+        {
           filter: { label: "过滤列", 
-                    prop:"salers", 
+                    prop:"tv", 
                     filters:[
-                              {text: '源九网络', value: '源九网络'},
-                              {text: '正元智慧', value: '正元智慧'}, 
-                              {text: '贝贝', value: '贝贝'},
-                              {text: '阿里巴巴', value: '阿里巴巴'}],
+                              {text: '士兵突击', value: '士兵突击'},
+                              {text: '知否知否应是绿肥红瘦', value: '知否知否应是绿肥红瘦'}, 
+                              {text: '琅琊榜', value: '琅琊榜'},
+                              {text: '庆余年', value: '庆余年'}],
                     filterMethod: this.filterTags
                   }
         },
@@ -94,7 +109,7 @@ export default {
             },
             {
               name: "导出", // 操作节点名称
-              type: "danger", // 按钮类型
+              type: "warning", // 按钮类型
               icon: "el-icon-upload",
               handleCb: this.handleCb
             }
@@ -106,10 +121,13 @@ export default {
   },
   methods: {
     handleCb(index, row, name) {
+      console.log('index',index);
+      console.log('row',row);
+      console.log('name',name);
       this.dialogVisible = true; // 开启dialog
     },
     filterTags(value,row){
-      return value === row.salers;
+      return value === row.tv;
     },
     filterChange() {
       console.log('触发表单过滤事件')

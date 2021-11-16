@@ -1,6 +1,8 @@
 # Element-fast-table
 
-下一个目标：实现el-table-column中的自定义内容
+已实现：
+
+JSON配置多选列、序号列、具体内容、自定义列（添加图标+内容）、筛选列、操作栏
 
 Element-fast-table采用`$attrs`和`$listeners`可用在<fast-table />上使用el-table的全部属性和事件，例如：
 
@@ -23,7 +25,13 @@ columns: [] // 列数据
 
 ## columns配置项
 
-columns列选项
+handleCb的回调函数接受三个参数：
+
++ index -> scope.$index  从0开始
++ row -> scope.row 行内数据
++ name -> name 按钮名字
+
+handleCb的使用可配合`el-dialog`实现弹框显示等
 
 ```js
 columns: [
@@ -39,10 +47,16 @@ columns: [
     isIndex: { type: "index", width: 80, label: "序号", isPagination: false} 
   },
   {
-    // prop:具体内容,对应fastData中的key
-    // label：表头名字
-    attrs: { label: "姓名", prop: "name" } 
+   // column列中只有文字内容
+    attrs: { label: "姓名", prop: "name" }
   },
+  {
+  	// 自定义列，可根据JSX自定义column内容
+  	customColumn: { label: "自定义列",
+                		render: (h,params) => {
+                    	return (JSX语法)
+                	}}
+	},
   {
     // 筛选列
     // filters: 筛选列数组
@@ -67,143 +81,17 @@ columns: [
   }
 ]
 ```
+## 界面
+![avatar](https://github.com/rzhAvenir/element-table-template/blob/dev/img/el-table.png)
 
-handleCb的回调函数接受三个参数：
 
-+ index -> scope.$index  从0开始
-+ row -> scope.row 行内数据
-+ name -> name 按钮名字
 
-handleCb的使用可配合`el-dialog`实现弹框显示等
 
-## 完整代码实例
 
-App.vue
 
-```js
-<template>
-  <div id="app">
-    <fast-table :data="fastData" :columns="columns" border stripe @filter-change="filterChange"></fast-table>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
-  </div>
-</template>
 
-<script>
-import FastTable from "./components/FastTable.vue";
-export default {
-  name: "App",
-  data() {
-    return {
-      dialogVisible: false,
-      fastData: [
-          {
-            name: "razzh-",
-            date: "2021",
-            habbit: "hard",
-            salers: "士兵突击"
-          },
-          {
-            name: 'razzg',
-            date: "2021-",
-            habbit: "game",
-            salers: "正元智慧"
-          },
-          {
-            name: "razzh",
-            date: "2022",
-            habbit: "coding",
-            salers: "贝贝"
-          },
-          {
-            name: "razzh+",
-            date: "2023",
-            habbit: "al",
-            salers: "阿里巴巴"
-          },
-        ],
-      columns: [
-        {
-          type: "selection"  // 是否开启多选
-        },
-        {
-          isIndex: { type: "index", width: 80, label: "序号", isPagination: false } // isPagination是否开启分页随页数自增
-        },
-        {
-          attrs: { label: "姓名", prop: "name" },
-        },
-        {
-          filter: { label: "过滤列", 
-                    prop:"salers", 
-                    filters:[
-                              {text: '士兵突击', value: '士兵突击'},
-                              {text: '正元智慧', value: '正元智慧'}, 
-                              {text: '贝贝', value: '贝贝'},
-                              {text: '阿里巴巴', value: '阿里巴巴'}],
-                    filterMethod: this.filterTags
-                  }
-        },
-        {
-          attrs: { label: "时间", prop: "date" },
-        },
-        {
-          attrs: { label: "爱好", prop: "habbit" },
-        },
-        {
-          operation: {
-            label: "操作",
-            width: 260,
-            btnList: [
-            {
-              name: "查看", // 操作节点名称
-              type: "primary", // 按钮类型
-              // icon: "el-icon-check",
-              handleCb: this.handleCb
-            },
-            {
-              name: "编辑", // 操作节点名称
-              type: "danger", // 按钮类型
-              icon: "el-icon-edit",
-              handleCb: this.handleCb
-            },
-            {
-              name: "导出", // 操作节点名称
-              type: "danger", // 按钮类型
-              icon: "el-icon-upload",
-              handleCb: this.handleCb
-            }
-          ],
-          }
-        }
-      ],
-    };
-  },
-  methods: {
-    handleCb(index, row, name) {
-      this.dialogVisible = true; // 开启dialog
-    },
-    filterTags(value,row){
-      return value === row.salers;
-    },
-    filterChange() {
-      console.log('触发表单过滤事件')
-    }
-  },
-  components: {
-    FastTable,
-  },
-};
-</script>
 
+<<<<<<< HEAD
 <style lang="scss">
 </style>
 ```
@@ -304,4 +192,6 @@ export default {
 }
 </style>
 ```
+=======
+>>>>>>> dev
 
