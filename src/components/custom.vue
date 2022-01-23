@@ -2,7 +2,7 @@
 export default {
   name: 'Custom',
   functional: true, // 开启函数式组件
-  props: { // Vue 2.3.0+在functional component下可忽略props
+  props: { // Vue 2.3.0+在functional component下可忽略props
     row: Object, // 用于JSX变量渲染
     index: Number, // 可能会用到的索引属性
     render: Function,
