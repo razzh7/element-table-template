@@ -52,11 +52,17 @@ columns: [
   },
   {
   	// 自定义列，可根据JSX自定义column内容
-  	customColumn: { label: "自定义列",
-                		render: (h,params) => {
-                    	return (JSX语法)
-                	}}
+  	custom: { label: "自定义列",
+              render: (h,params) => {
+            return (JSX语法)
+          }}
 	},
+  // 或者
+  custom: {
+    label: "自定义模版",
+    prop: "xxx",
+    tpl: string | function
+  }
   {
     // 筛选列
     // filters: 筛选列数组
