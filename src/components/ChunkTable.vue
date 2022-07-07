@@ -37,7 +37,11 @@
         >
         </el-table-column>
         <!-- 自定义列 -->
-        <el-table-column v-else-if="column.custom" v-bind="column.custom" align="center">
+        <el-table-column
+          v-else-if="column.custom"
+          v-bind="column.custom"
+          align="center"
+        >
           <template slot-scope="scope">
             <!-- 使用render函数 -->
             <custom
@@ -81,7 +85,9 @@
                     v-if="item.icon"
                     :icon="item.icon"
                     :type="item.type"
-                    @click.native="item.handleCb(scope.$index, scope.row, item.name)"
+                    @click.native="
+                      item.handleCb(scope.$index, scope.row, item.name)
+                    "
                     size="mini"
                     v-bind="item"
                   >
@@ -90,7 +96,9 @@
                   <el-button
                     v-else
                     :type="item.type"
-                    @click.native="item.handleCb(scope.$index, scope.row, item.name)"
+                    @click.native="
+                      item.handleCb(scope.$index, scope.row, item.name)
+                    "
                     size="mini"
                     v-bind="item"
                   >
@@ -107,13 +115,13 @@
 </template>
 
 <script>
-import Custom from './custom.vue'
+import Custom from './custom.vue';
 export default {
-  name: 'FastTable',
+  name: 'ChunkTable',
   components: {
     Custom,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

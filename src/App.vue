@@ -1,33 +1,37 @@
 <template>
   <div id="app">
-    <fast-table :data="fastData" :columns="columns" border stripe @filter-change="filterChange"></fast-table>
+    <ChunkTable
+      :data="fastData"
+      :columns="columns"
+      border
+      stripe
+      @filter-change="filterChange"
+    ></ChunkTable>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span>这是一段信息</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import FastTable from "./components/FastTable.vue";
-import mock from './utils/mockData'
-import { eTableList } from "./utils/eTable";
+import ChunkTable from './components/ChunkTable.vue';
+import mock from './utils/mockData';
+import { eTableList } from './utils/eTable';
 
 export default {
-  name: "App",
+  name: 'App',
   data() {
-    const List = eTableList(this.filterTags, this.handleCb) // 传入要执行的函数
+    const List = eTableList(this.filterTags, this.handleCb); // 传入要执行的函数
     return {
       dialogVisible: false,
-      fastData: [
-        ...mock.list
-      ],
-      columns: [
-        ...List
-      ],
+      fastData: [...mock.list],
+      columns: [...List],
     };
   },
   methods: {
@@ -41,14 +45,13 @@ export default {
       return value === row.tv;
     },
     filterChange() {
-      console.log('触发表单过滤事件')
-    }
+      console.log('触发表单过滤事件');
+    },
   },
   components: {
-    FastTable,
+    ChunkTable,
   },
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
